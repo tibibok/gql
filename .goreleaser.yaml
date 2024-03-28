@@ -1,0 +1,38 @@
+project_name: gql
+env_files:
+  github_token: ~/.github.token
+builds:
+  - main: .
+    id: gql
+    binary: gql
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -X main.version={{ .Version }}
+      - -X main.release={{ .ShortCommit }}
+    env:
+      - CGO_ENABLED=0
+
+nfpms:
+  - id: gql
+    file_name_template: "gql-{{ .Version }}-{{ .Os }}-{{ .Arch }}"
+    package_name: gql
+    maintainer: tibibok <tibibok@gmail.com>
+    description: GraphQL CLI
+    license: "MIT"
+    bindir: /usr/bin
+    builds:
+      - gql
+    formats:
+      - rpm
+      - deb
+
+release:
+  github:
+    owner: tibibok
+    name: gql
