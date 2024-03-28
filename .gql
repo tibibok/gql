@@ -1,0 +1,18 @@
+# get nodes by hostlist
+query node(
+	# hostlist
+  $_1: String!
+	# partition name
+  $partition: String! = "skylake"
+) {
+  partition(name: $partition) {
+    partitions {
+      name
+    }
+  }
+  node(hostlist: $_1) {
+    nodes {
+      address
+    }
+  }
+}
